@@ -7,8 +7,7 @@
 # General application configuration
 use Mix.Config
 
-config :master,
-  ecto_repos: [Master.Repo]
+config :master, ecto_repos: [Master.Repo]
 
 # Configures the endpoint
 config :master, MasterWeb.Endpoint,
@@ -25,6 +24,27 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :master, :ops,
+  docker: [
+    username: System.get_env("DOCKER_USER"),
+    password: System.get_env("DOCKER_PASS"),
+    image_repository: "forfunfun/fun.master",
+    file: "config/docker/Dockerfile"
+  ],
+  build_info: [
+    file_name: "tmp/build_info.json"
+  ],
+  check_restart_timeout: 30,
+  available_environments: ["staging", "uat", "prod", "stable"],
+  auto_build_branches: ["develop", "dev", "master", "release", "hotfix"]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-import_config "#{Mix.env()}.exs"
+logger_file = "deps/ext/lib/ext/logger/config.exs"
+if File.exists?(logger_file), do: import_config("../#{logger_file}")
+
+case Mix.env() do
+  :test -> import_config "test.exs"
+  :dev -> import_config "dev.exs"
+  _ -> import_config "server.exs"
+end
