@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :master, Master.Repo,
-  username: "postgres",
+  username: System.get_env("POSTGRES_USER"),
   password: "postgres",
   database: "master_test",
   hostname: "localhost",
@@ -11,7 +11,7 @@ config :master, Master.Repo,
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :master, MasterWeb.Endpoint,
-  http: [port: 4002],
+  http: [port: 4_002],
   server: false
 
 # Print only warnings and errors during test

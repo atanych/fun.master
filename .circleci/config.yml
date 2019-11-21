@@ -1,0 +1,55 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version here
+      - image: forfunfun/base-elixir:0.1.0
+        environment:  # environment variables for primary container
+          MIX_ENV: test
+          REDIS_URL: 127.0.0.1
+          POSTGRES_USER: root
+
+      - image: shold046/postgres-11-rus
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: fun_master_test
+
+    steps:
+      - checkout
+
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+      - run: mix deps.get
+
+      - run:
+          name: Check by formatter
+          command: mix format --check-formatted
+
+      - run:
+          name: Check by credo
+          command: mix credo --strict
+
+      - run:
+          name: Check coveralls and run tests
+          command: mix coveralls
+
+      # Start docker
+      - setup_remote_docker:
+          docker_layer_caching: false
+
+      # Install docker in container
+      - run:
+          name: Install Docker client for push
+          command: |
+            set -x
+            VER="18.06.0-ce"
+            curl -L -o /tmp/docker-$VER.tgz https://download.docker.com/linux/static/stable/x86_64/docker-$VER.tgz
+            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
+            mv /tmp/docker/* /usr/bin
+
+      # Login to docker
+      - run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+      # Deploy
+#      - run: mix ops.handle_commit

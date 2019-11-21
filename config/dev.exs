@@ -2,12 +2,11 @@ use Mix.Config
 
 # Configure your database
 config :master, Master.Repo,
-  username: "postgres",
-  password: "postgres",
-  database: "master_dev",
+  database: "fun_mater_dev",
   hostname: "localhost",
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  ownership_timeout: 300_000,
+  timeout: 300_000
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -16,7 +15,7 @@ config :master, Master.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :master, MasterWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: 4_001],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

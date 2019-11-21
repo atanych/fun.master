@@ -1,0 +1,15 @@
+# App artifacts
+/_build
+/deps
+/*.ez
+
+erl_crash.dump
+
+# Static artifacts
+/assets/node_modules
+
+/priv/static/
+test
+/log
+/k8s
+.env

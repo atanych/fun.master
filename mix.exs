@@ -7,10 +7,19 @@ defmodule Master.MixProject do
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
+      build_per_environment: Mix.env() in [:test, :dev],
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      elixirc_options: [warnings_as_errors: System.get_env("CIRCLECI") == "true"]
     ]
   end
 
@@ -36,11 +45,17 @@ defmodule Master.MixProject do
       {:phoenix, "~> 1.4.10"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_ecto, "~> 4.0"},
-      {:ecto_sql, "~> 3.1"},
+      {:ecto_sql, "~> 3.2"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:ext, git: "https://github.com/outcastby/ext.git"},
+      {:ops, git: "https://github.com/outcastby/ops.git"},
+      {:excoveralls, "~> 0.10", only: :test},
+      {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.3", only: :test},
+      {:mock, "0.3.3", only: :test}
     ]
   end
 
@@ -54,6 +69,8 @@ defmodule Master.MixProject do
     [
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
+      credo: "credo --strict",
+      format_credo: ["format", "credo"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
