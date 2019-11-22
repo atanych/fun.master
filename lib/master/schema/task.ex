@@ -1,4 +1,4 @@
-defmodule Schema.Task do
+defmodule Master.Task do
   @moduledoc false
   use Master.Schema
   import EctoEnum, only: [defenum: 2]
@@ -8,12 +8,13 @@ defmodule Schema.Task do
     field :movie_uuid, Ecto.UUID
     field :origin_url, :string
     field :status, StatusEnum, default: :new
-    belongs_to :server, Server
-    belongs_to :worker, Worker
+    field :pid, :string
+    belongs_to :server, Master.Server
+    belongs_to :worker, Master.Worker
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
-    cast(struct, params, [:movie_uuid, :origin_url, :status, :server_id, :worker_id])
+    cast(struct, params, [:movie_uuid, :origin_url, :status, :server_id, :worker_id, :pid])
   end
 end

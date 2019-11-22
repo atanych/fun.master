@@ -1,4 +1,4 @@
-defmodule Worker do
+defmodule Master.Worker do
   @moduledoc false
   use Master.Schema
   import EctoEnum, only: [defenum: 2]
@@ -7,7 +7,7 @@ defmodule Worker do
   schema "workers" do
     field :ip, :string
     field :status, StatusEnum, default: :new
-    has_many :tasks, Schema.Task
+    has_many :tasks, Master.Task
     timestamps()
   end
 

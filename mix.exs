@@ -71,7 +71,7 @@ defmodule Master.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       credo: "credo --strict",
       format_credo: ["format", "credo"],
-      test: ["ecto.create --quiet", "ecto.migrate", "test"]
+      test: ["sync.migrations", "ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end
