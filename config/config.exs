@@ -8,6 +8,8 @@
 use Mix.Config
 
 config :master, ecto_repos: [Master.Repo]
+config :master, :self_name, System.get_env("SELF_NAME")
+config :master, Servers.ChangeReserved, default_reserve: 10
 
 # Configures the endpoint
 config :master, MasterWeb.Endpoint,

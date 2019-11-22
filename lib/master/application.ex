@@ -8,12 +8,9 @@ defmodule Master.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
       Master.Repo,
-      # Start the endpoint when the application starts
-      MasterWeb.Endpoint
-      # Starts a worker by calling: Master.Worker.start_link(arg)
-      # {Master.Worker, arg},
+      MasterWeb.Endpoint,
+      Workers.Task
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

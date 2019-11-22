@@ -4,7 +4,7 @@ use Mix.Config
 config :master, Master.Repo,
   username: System.get_env("POSTGRES_USER"),
   password: "postgres",
-  database: "master_test",
+  database: "fun_master_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 

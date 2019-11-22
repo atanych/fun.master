@@ -20,6 +20,11 @@ defmodule MasterWeb.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
       alias MasterWeb.Router.Helpers, as: Routes
+      import Factories.Base
+      import Ext.ExUnit.Assertions
+      import Mock
+      require IEx
+      require Logger
 
       # The default endpoint for testing
       @endpoint MasterWeb.Endpoint
