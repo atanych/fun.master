@@ -1,0 +1,20 @@
+---
+- hosts: workers
+  vars:
+    work_dir: "{{ lookup('env','PWD') }}"
+  tasks:
+    - name: "Install docker"
+      shell: |
+        sudo apt-get update \
+        && sudo apt-get install -qy docker.io
+
+    - name: "Pull docker ffmpeg"
+      shell: |
+        docker pull jrottenberg/ffmpeg
+
+    - name: "Create dir for scripts"
+      shell: |
+        mkdir /home/scripts
+
+    - name: "Copy scripts to remote host"
+      copy: src={{ work_dir }}/scripts dest=/home

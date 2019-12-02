@@ -1,4 +1,4 @@
-defmodule Workers.Task do
+defmodule Workers.Worker do
   @moduledoc false
   use GenServer, restart: :transient
   require IEx
@@ -16,10 +16,8 @@ defmodule Workers.Task do
   end
 
   def handle_info(:run_activity, state) do
-    Logger.info("Start task activity")
-    Tasks.ProcessLoading.call()
-    Tasks.ProcessInProgress.call()
-    Tasks.ProcessNew.call()
+    Logger.info("Start worker activity")
+    Workers.Provision.call()
     schedule_next_activity(state)
   end
 

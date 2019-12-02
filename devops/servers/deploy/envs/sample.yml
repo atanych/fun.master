@@ -1,0 +1,7 @@
+db_hostname: master_db
+db_port: 5432
+masters:
+  - name: m1
+    ip: 192.168.1.1
+  - name: m2
+    ip: 192.168.1.2

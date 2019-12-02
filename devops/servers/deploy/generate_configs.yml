@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  vars:
+    work_dir: "{{ lookup('env','PWD') }}"
+  tasks:
+    - name: Generate tmp/hosts file
+      template: src=host.j2 dest={{ work_dir }}/tmp/deploy_host
+
+    - name: Generate env.file
+      template: src=env.file.j2 dest={{ work_dir }}/tmp/env.file

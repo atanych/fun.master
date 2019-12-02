@@ -55,7 +55,8 @@ defmodule Master.MixProject do
       {:excoveralls, "~> 0.10", only: :test},
       {:credo, "~> 1.1.0", only: [:dev, :test], runtime: false},
       {:ex_machina, "~> 2.3", only: :test},
-      {:mock, "0.3.3", only: :test}
+      {:mock, "0.3.3", only: :test},
+      {:yaml_elixir, "~> 2.4.0"}
     ]
   end
 
