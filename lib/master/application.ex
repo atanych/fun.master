@@ -10,7 +10,8 @@ defmodule Master.Application do
     children = [
       Master.Repo,
       MasterWeb.Endpoint,
-      Workers.Task
+      Workers.Task,
+      Workers.Worker
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

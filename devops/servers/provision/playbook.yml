@@ -1,0 +1,7 @@
+---
+- hosts: master
+  tasks:
+    - name: "Install docker"
+      shell: |
+        sudo apt-get update \
+        && sudo apt-get install -qy docker.io

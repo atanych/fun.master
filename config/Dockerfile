@@ -1,8 +1,5 @@
 FROM forfunfun/base-elixir:0.1.0
 
-# Add the nginx site and config
-ADD config/docker/config/nginx.conf /etc/nginx/sites-enabled/master.conf
-
 RUN rm -f /etc/service/nginx/down
 RUN rm -f /etc/nginx/sites-enabled/default
 
@@ -10,6 +7,7 @@ RUN rm -f /etc/nginx/sites-enabled/default
 ENV HOME /home/app/fun.master
 WORKDIR $HOME
 ADD . /home/app/fun.master
+RUN mkdir tmp content
 
 ENV MIX_ENV prod
 

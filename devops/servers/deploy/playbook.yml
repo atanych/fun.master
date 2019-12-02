@@ -1,0 +1,23 @@
+---
+- hosts: master
+  vars:
+    work_dir: "{{ lookup('env','PWD') }}"
+  tasks:
+    - name: "Copy env.file to server"
+      copy: src={{ work_dir }}/tmp/env.file dest=/tmp
+
+    - name: "Login to docker"
+      shell: |
+        docker login -u {{ docker_user }} -p {{ docker_pass }}
+
+    - name: "Pull docker image"
+      shell: |
+        docker pull {{ repository }}:{{ tag }}
+
+    - name: "Remove old container"
+      shell: |
+        docker stop master || true && docker rm master || true
+
+    - name: "Start container"
+      shell: |
+        docker run --name master -d -it -v /mnt:/home/app/fun.master/content --env-file /tmp/env.file {{ repository }}:{{ tag }}

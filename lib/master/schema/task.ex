@@ -9,12 +9,13 @@ defmodule Master.Task do
     field :origin_url, :string
     field :status, StatusEnum, default: :new
     field :pid, :string
+    field :url, :string
     belongs_to :server, Master.Server
     belongs_to :worker, Master.Worker
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
-    cast(struct, params, [:movie_uuid, :origin_url, :status, :server_id, :worker_id, :pid])
+    cast(struct, params, [:movie_uuid, :origin_url, :status, :server_id, :worker_id, :pid, :url])
   end
 end

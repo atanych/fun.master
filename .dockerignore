@@ -13,3 +13,11 @@ test
 /log
 /k8s
 .env
+/tmp
+/content
+
+devops/workers/provision.retry
+devops/servers/provision/playbook.retry
+devops/servers/deploy/playbook.retry
+devops/servers/deploy/generate_configs.retry
+devops/servers/provision/host

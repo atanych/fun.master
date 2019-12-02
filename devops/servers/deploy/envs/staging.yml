@@ -1,0 +1,5 @@
+db_hostname: 104.248.39.66
+db_port: 31001
+masters:
+  - name: m1
+    ip: 165.22.92.71

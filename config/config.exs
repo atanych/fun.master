@@ -8,8 +8,13 @@
 use Mix.Config
 
 config :master, ecto_repos: [Master.Repo]
-config :master, :self_name, System.get_env("SELF_NAME")
+
+config :master,
+  self_name: System.get_env("SELF_NAME"),
+  workers: [origin_path: "/home/origin", transcode_path: "/home/transcode", scripts_path: "/home/scripts"]
+
 config :master, Servers.ChangeReserved, default_reserve: 10
+config :master, Servers.GetSpace, min_disk_space: 15
 
 # Configures the endpoint
 config :master, MasterWeb.Endpoint,
@@ -31,7 +36,7 @@ config :master, :ops,
     username: System.get_env("DOCKER_USER"),
     password: System.get_env("DOCKER_PASS"),
     image_repository: "forfunfun/fun.master",
-    file: "config/docker/Dockerfile"
+    file: "config/Dockerfile"
   ],
   build_info: [
     file_name: "tmp/build_info.json"
