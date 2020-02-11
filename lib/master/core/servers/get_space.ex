@@ -7,7 +7,11 @@ defmodule Servers.GetSpace do
     "content"
     |> File.ls!()
     |> Enum.map(fn dir ->
-      {space, 0} = System.cmd("df", ["#{if Mix.env() in [:dev, :test], do: "-h", else: "-BG"}", "content/#{dir}"])
+      {space, 0} =
+        System.cmd("df", [
+          "#{if Mix.env() in [:dev, :test] && System.get_env("CIRCLECI") != "true", do: "-h", else: "-BG"}",
+          "content/#{dir}"
+        ])
 
       space =
         space |> String.trim("\n") |> String.split("\n") |> List.last() |> String.split(" ") |> Enum.reject(&(&1 == ""))
