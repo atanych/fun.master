@@ -49,7 +49,7 @@ defmodule Tasks.ProcessLoadingTest do
         )
 
         Tasks.ProcessLoading.call()
-        tasks = Master.Task |> Master.Repo.where(status: :in_progress) |> Master.Repo.all()
+        tasks = Master.Task |> Master.Repo.where(status: :done) |> Master.Repo.all()
         assert length(tasks) == 1
       end
     end

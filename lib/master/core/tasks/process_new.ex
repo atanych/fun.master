@@ -20,7 +20,7 @@ defmodule Tasks.ProcessNew do
 
         if worker do
           Master.Repo.save!(task, %{status: :in_progress, worker_id: worker.id})
-          worker |> Master.Repo.save!(%{status: :busy}) |> Workers.Transcoding.call(task)
+          worker |> Workers.ChangeStatus.call(:busy) |> Workers.Transcoding.call(task)
           Servers.ChangeReserved.call(server || task.server, :increase)
         end
       end)
