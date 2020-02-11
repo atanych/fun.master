@@ -3,9 +3,9 @@ defmodule Workers.TranscodingTest do
 
   setup do
     server = insert(:server, name: "def_1", total_space: 100, available_space: 100)
-    worker = insert(:worker, ip: "192.168.1.1", status: :busy)
+    worker = insert(:worker, ip: "192.168.1.1", status: :busy, max_tasks: 1, tasks_in_progress: 1)
     uuid = Ecto.UUID.generate()
-    task = insert(:task, server: server, movie_uuid: uuid, status: :in_progress, worker: worker)
+    task = insert(:task, server: server, movie_uuid: uuid, status: :in_progress, worker: worker, origin_url: "/f/1.mkv")
     %{task: task, worker: worker}
   end
 

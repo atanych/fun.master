@@ -38,7 +38,7 @@ defmodule Tasks.ProcessNewTest do
     test "if exists tasks in status new and has one workers, start one task" do
       with_mocks([{Workers.Transcoding, [], [call: fn _, _ -> "" end]}]) do
         server = insert(:server, name: "def_1", total_space: 100, available_space: 100)
-        insert(:worker, ip: "192.168.1.1", status: :ready)
+        insert(:worker, ip: "192.168.1.1", status: :ready, max_tasks: 1)
         insert(:task, server_id: server.id, movie_uuid: Ecto.UUID.generate())
         insert(:task, server_id: server.id, movie_uuid: Ecto.UUID.generate())
         Tasks.ProcessNew.call()
@@ -55,8 +55,8 @@ defmodule Tasks.ProcessNewTest do
     test "if exists tasks in status new and has one workers, start two task" do
       with_mocks([{Workers.Transcoding, [], [call: fn _, _ -> "" end]}]) do
         server = insert(:server, name: "def_1", total_space: 100, available_space: 100)
-        insert(:worker, ip: "192.168.1.1", status: :ready)
-        insert(:worker, ip: "192.168.1.2", status: :ready)
+        insert(:worker, ip: "192.168.1.1", status: :ready, max_tasks: 1)
+        insert(:worker, ip: "192.168.1.2", status: :ready, max_tasks: 1)
         insert(:task, server_id: server.id, movie_uuid: Ecto.UUID.generate())
         insert(:task, server_id: server.id, movie_uuid: Ecto.UUID.generate())
         Tasks.ProcessNew.call()

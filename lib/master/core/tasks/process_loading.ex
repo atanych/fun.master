@@ -10,7 +10,7 @@ defmodule Tasks.ProcessLoading do
     |> Master.Repo.all()
     |> Enum.each(fn task ->
       unless task.pid |> Ext.Utils.Base.decode() |> Process.alive?(),
-        do: Master.Repo.save!(task, %{status: :in_progress})
+        do: Master.Repo.save!(task, %{status: :done})
     end)
   end
 end

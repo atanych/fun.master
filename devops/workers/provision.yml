@@ -14,7 +14,13 @@
 
     - name: "Create dir for scripts"
       shell: |
-        mkdir /home/scripts
+        mkdir -p /home/scripts
 
     - name: "Copy scripts to remote host"
       copy: src={{ work_dir }}/scripts dest=/home
+
+    - name: "Copy origin key to remote host"
+      copy: src={{ work_dir }}/devops/origin.key dest=/home/scripts
+
+    - name: "Set to  origin key file"
+      shell: chmod 400 /home/scripts/origin.key

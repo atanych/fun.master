@@ -35,7 +35,7 @@ defmodule Tasks.ProcessInProgressTest do
         {Workers.Loading, [], [call: fn _ -> "" end]}
       ]) do
         server = insert(:server, name: "def_1", total_space: 100, available_space: 100)
-        worker = insert(:worker, ip: "192.168.1.1", status: :busy)
+        worker = insert(:worker, ip: "192.168.1.1", status: :busy, max_tasks: 1, tasks_in_progress: 1)
         uuid = Ecto.UUID.generate()
         insert(:task, server_id: server.id, movie_uuid: uuid, status: :in_progress, worker_id: worker.id)
         Tasks.ProcessInProgress.call()

@@ -7,11 +7,13 @@ defmodule Master.Worker do
   schema "workers" do
     field :ip, :string
     field :status, StatusEnum, default: :new
+    field(:max_tasks, :integer, default: 0)
+    field(:tasks_in_progress, :integer, default: 0)
     has_many :tasks, Master.Task
     timestamps()
   end
 
   def changeset(struct, params \\ %{}) do
-    cast(struct, params, [:ip, :status])
+    cast(struct, params, [:ip, :status, :max_tasks, :tasks_in_progress])
   end
 end
