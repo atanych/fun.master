@@ -2,5 +2,6 @@
 {{ host_ip }}
 [workers:vars]
 ansible_user=root
-ansible_ssh_private_key_file=workers.key
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_private_key_file=devops/workers/workers.key
 ansible_python_interpreter=/usr/bin/python3
