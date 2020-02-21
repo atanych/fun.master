@@ -5,8 +5,9 @@
   tasks:
     - name: "Install ffmpeg"
       shell: |
-        sudo apt-get update \
-        && sudo apt-get install -qy ffmpeg
+        sudo apt update \
+        && sudo add-apt-repository -y ppa:jonathonf/ffmpeg-4 \
+        && sudo apt install -qy ffmpeg
 
     - name: "Create dir for scripts"
       shell: |

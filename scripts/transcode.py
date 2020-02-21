@@ -49,13 +49,15 @@ download_file(ip, url, origin_uuid_path)
 
 # start command transcode
 cmd = f'ffmpeg -i {origin_uuid_path}/{name} -b:v:0 4000k -b:a:0 64k -map 0:v -map 0:a -f hls -var_stream_map "v:0,a:0"  -hls_list_size 0 -master_pl_name master.m3u8 -hls_segment_filename "{transcode_uuid_path}/vs%v/file_%03d.ts" {transcode_uuid_path}/vs%v/out.m3u8'
-os.system(cmd)
+result_transcode = os.system(cmd)
 
-print("File transcoded - " + str(datetime.datetime.now()))
-
-# set status ready
-f= open(status_file_path,"w+")
-f.write("ready")
-f.close()
+if result_transcode == 0:
+  # set status ready
+  f= open(status_file_path,"w+")
+  f.write("ready")
+  f.close()
+  print("File transcoded - " + str(datetime.datetime.now()))
+else:
+  print(f'Script has error if TRANSCODE, code - {result_transcode}')
 
 # END SCRIPT COMMANDS
