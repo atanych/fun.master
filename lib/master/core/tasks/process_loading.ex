@@ -7,6 +7,7 @@ defmodule Tasks.ProcessLoading do
     Master.Task
     |> Tasks.ServerQuery.call()
     |> Master.Repo.where(%{status: :loading})
+    |> Master.Repo.order_by(asc: :updated_at)
     |> Master.Repo.all()
     |> Enum.each(fn task ->
       unless task.pid |> Ext.Utils.Base.decode() |> Process.alive?(),

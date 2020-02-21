@@ -1,0 +1,6 @@
+db_hostname: db-postgresql-nyc1-89991-do-user-6640889-0.db.ondigitalocean.com
+db_port: 25060
+db_pass: rw21m8hl8pihfmvk
+masters:
+  - name: m1
+    ip: 91.218.215.10

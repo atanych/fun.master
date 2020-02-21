@@ -10,6 +10,8 @@ defmodule Workers.BuildSshArgsTest do
       args = Workers.BuildSshArgs.call(worker, ["rm", "-r", "/home/origin/"])
 
       assert args == [
+               "-o ServerAliveInterval=5",
+               "-o ServerAliveCountMax=2",
                "-oStrictHostKeyChecking=no",
                "-i",
                "devops/workers/workers.key",
@@ -24,6 +26,8 @@ defmodule Workers.BuildSshArgsTest do
       args = Workers.BuildSshArgs.call(worker, ["/home/origin/", "/content/d1/"], :scp)
 
       assert args == [
+               "-o ServerAliveInterval=5",
+               "-o ServerAliveCountMax=2",
                "-oStrictHostKeyChecking=no",
                "-i",
                "devops/workers/workers.key",

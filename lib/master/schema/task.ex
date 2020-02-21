@@ -2,7 +2,7 @@ defmodule Master.Task do
   @moduledoc false
   use Master.Schema
   import EctoEnum, only: [defenum: 2]
-  defenum StatusEnum, new: 0, in_progress: 1, loading: 2, done: 3
+  defenum StatusEnum, new: 0, in_progress: 1, loading: 2, done: 3, file_not_found: 4
 
   schema "tasks" do
     field :movie_uuid, Ecto.UUID

@@ -7,5 +7,12 @@ defmodule Workers.BuildSshArgs do
 
   def call(worker, [head | tail], :scp), do: common_args() ++ ["-r", "root@#{worker.ip}:#{head}"] ++ tail
 
-  def common_args, do: ["-oStrictHostKeyChecking=no", "-i", "devops/workers/workers.key"]
+  def common_args,
+    do: [
+      "-o ServerAliveInterval=5",
+      "-o ServerAliveCountMax=2",
+      "-oStrictHostKeyChecking=no",
+      "-i",
+      "devops/workers/workers.key"
+    ]
 end

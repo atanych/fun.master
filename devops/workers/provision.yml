@@ -3,14 +3,10 @@
   vars:
     work_dir: "{{ lookup('env','PWD') }}"
   tasks:
-    - name: "Install docker"
+    - name: "Install ffmpeg"
       shell: |
         sudo apt-get update \
-        && sudo apt-get install -qy docker.io
-
-    - name: "Pull docker ffmpeg"
-      shell: |
-        docker pull jrottenberg/ffmpeg
+        && sudo apt-get install -qy ffmpeg
 
     - name: "Create dir for scripts"
       shell: |

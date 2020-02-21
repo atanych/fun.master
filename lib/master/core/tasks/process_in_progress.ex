@@ -7,6 +7,7 @@ defmodule Tasks.ProcessInProgress do
     Master.Task
     |> Tasks.ServerQuery.call()
     |> Master.Repo.where(%{status: :in_progress})
+    |> Master.Repo.order_by(asc: :updated_at)
     |> Master.Repo.all()
     |> Master.Repo.preload([:worker, :server])
     |> Enum.each(&handle_task(&1))

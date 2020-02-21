@@ -8,12 +8,22 @@ defmodule Mix.Tasks.Deploy do
   def run([env_name, tag]) do
     HTTPoison.start()
     config_path = "devops/servers/deploy/envs/#{env_name}.yml"
-    config = File.cwd!() |> Path.join(config_path) |> YamlElixir.read_from_file!() |> Ext.Utils.Base.to_atom()
-    context = %{env_name: env_name, tag: tag, db_hostname: config.db_hostname, db_port: config.db_port}
+
+    %{db_hostname: db_hostname, db_port: db_port, db_pass: db_pass} =
+      config = File.cwd!() |> Path.join(config_path) |> YamlElixir.read_from_file!() |> Ext.Utils.Base.to_atom()
+
+    context = %{
+      env_name: env_name,
+      tag: tag,
+      db_hostname: db_hostname,
+      db_port: db_port,
+      db_pass: db_pass
+    }
+
     config |> Map.get(:masters, []) |> Enum.each(&deploy(&1, context))
   end
 
-  def deploy(master, %{env_name: env_name, tag: tag, db_hostname: db_hostname, db_port: db_port}) do
+  def deploy(master, %{env_name: env_name, tag: tag, db_hostname: db_hostname, db_port: db_port, db_pass: db_pass}) do
     Ops.Utils.Io.puts("Deploy master - '#{master.name}'. Environment=#{env_name}. Image=#{tag}")
 
     # Find or create build
@@ -25,7 +35,8 @@ defmodule Mix.Tasks.Deploy do
       "master_name=#{master.name}",
       "master_ip=#{master.ip}",
       "db_hostname=#{db_hostname}",
-      "db_port=#{db_port}"
+      "db_port=#{db_port}",
+      "db_pass=#{db_pass}"
     ]
 
     args = ["-i", "localhost", "devops/servers/deploy/generate_configs.yml", "--extra-vars", Enum.join(vars, " ")]
