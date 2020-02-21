@@ -9,6 +9,7 @@ WORKDIR $HOME
 ADD . /home/app/fun.master
 RUN mkdir -p tmp content
 RUN chmod 400 devops/origin.key
+RUN chmod 400 devops/workers/workers.key
 
 ENV MIX_ENV prod
 
