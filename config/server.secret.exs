@@ -12,6 +12,5 @@ config :master, Master.Repo,
   hostname: System.get_env("POSTGRES_HOSTNAME"),
   port: "POSTGRES_PORT" |> System.get_env("5432") |> String.to_integer(),
   pool_size: "POSTGRES_POOL_SIZE" |> System.get_env("15") |> String.to_integer(),
-  ssl: true,
   ownership_timeout: 300_000,
   timeout: 300_000

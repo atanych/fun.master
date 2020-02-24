@@ -1,4 +1,4 @@
-db_hostname: db-postgresql-nyc1-89991-do-user-6640889-0.db.ondigitalocean.com
+db_hostname: 64.227.2.62
 db_port: 25060
 db_pass: rw21m8hl8pihfmvk
 masters:
