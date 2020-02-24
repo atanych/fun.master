@@ -2,7 +2,7 @@
 project_dir="/home/app/fun.master"
 
 printf "create and migrate db start"
-cd "$project_dir" && mix ecto.migrate
+cd "$project_dir" && mix ecto.create && mix ecto.migrate
 printf "create and migrate db finish"
 
 printf "run server"
