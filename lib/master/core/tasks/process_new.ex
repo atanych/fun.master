@@ -9,7 +9,7 @@ defmodule Tasks.ProcessNew do
     |> Tasks.ServerQuery.call()
     |> Master.Repo.where(%{status: :new})
     |> Master.Repo.order_by(asc: :inserted_at)
-    |> Ecto.Query.limit(20)
+    |> Ecto.Query.limit(30)
     |> Master.Repo.all()
     |> Master.Repo.preload([:server])
     |> Enum.reduce(nil, &handle_task(&1, &2))
@@ -47,7 +47,12 @@ defmodule Tasks.ProcessNew do
   end
 
   def handle_file_status(_, task, server) do
-    worker = Master.Worker |> Master.Repo.lock_for_update() |> Master.Repo.where(status: :ready) |> Master.Repo.first()
+    worker =
+      Master.Worker
+      |> Master.Repo.lock_for_update()
+      |> Master.Repo.where(status: :ready)
+      |> Master.Repo.order_by(asc: :tasks_in_progress)
+      |> Master.Repo.first()
 
     if worker do
       Master.Repo.save!(task, %{status: :in_progress, worker_id: worker.id})
