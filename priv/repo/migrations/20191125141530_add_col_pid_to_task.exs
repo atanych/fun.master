@@ -2,7 +2,7 @@ defmodule Master.Repo.Migrations.AddColPidToTask do
   use Ecto.Migration
 
   def change do
-    alter table :tasks do
+    alter table(:tasks) do
       add :pid, :string, description: "ID of loading task"
     end
 

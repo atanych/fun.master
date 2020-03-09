@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Create dirs for randomize
-          command: mkdir -p content && mkdir -p content/d1
+          command: mkdir -p m1 && mkdir -p m1/d1
 
       - run:
           name: Check by formatter

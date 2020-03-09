@@ -20,4 +20,4 @@
 
     - name: "Start container"
       shell: |
-        docker run --name master -d -it -v /mnt:/home/app/fun.master/content --env-file /tmp/env.file {{ repository }}:{{ tag }}
+        docker run --name master -d -it -v /mnt:/home/app/fun.master/{{ master_name }} --env-file /tmp/env.file {{ repository }}:{{ tag }}

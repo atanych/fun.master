@@ -7,7 +7,7 @@ RUN rm -f /etc/nginx/sites-enabled/default
 ENV HOME /home/app/fun.master
 WORKDIR $HOME
 ADD . /home/app/fun.master
-RUN mkdir -p tmp content
+RUN mkdir -p tmp m1 m2 m3 m4 m5
 RUN chmod 400 devops/origin.key
 RUN chmod 400 devops/workers/workers.key
 

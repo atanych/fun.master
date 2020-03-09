@@ -58,7 +58,7 @@ defmodule Workers.LoadingTest do
        ]}
     ]) do
       Workers.Loading.call(task)
-      url = "content/d1/#{Timex.format!(Timex.now(), "%W", :strftime)}/#{task.movie_uuid}/master.m3u8"
+      url = "m1/d1/#{Timex.format!(Timex.now(), "%W", :strftime)}/#{task.movie_uuid}/master.m3u8"
       server = Master.Repo.reload(task.server)
       task = Master.Repo.reload(task)
       assert %{status: :done, url: ^url} = task

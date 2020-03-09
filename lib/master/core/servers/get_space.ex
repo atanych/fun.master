@@ -4,13 +4,13 @@ defmodule Servers.GetSpace do
   require IEx
 
   def call do
-    "content"
+    "#{Ext.Config.get(:self_name)}"
     |> File.ls!()
     |> Enum.map(fn dir ->
       {space, 0} =
         System.cmd("df", [
           "#{if Mix.env() in [:dev, :test] && System.get_env("CIRCLECI") != "true", do: "-h", else: "-BG"}",
-          "content/#{dir}"
+          "#{Ext.Config.get(:self_name)}/#{dir}"
         ])
 
       space =

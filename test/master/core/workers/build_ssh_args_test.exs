@@ -23,7 +23,7 @@ defmodule Workers.BuildSshArgsTest do
     end
 
     test "scp args", %{worker: worker} do
-      args = Workers.BuildSshArgs.call(worker, ["/home/origin/", "/content/d1/"], :scp)
+      args = Workers.BuildSshArgs.call(worker, ["/home/origin/", "/m1/d1/"], :scp)
 
       assert args == [
                "-o ServerAliveInterval=5",
@@ -33,7 +33,7 @@ defmodule Workers.BuildSshArgsTest do
                "devops/workers/workers.key",
                "-r",
                "root@192.168.1.1:/home/origin/",
-               "/content/d1/"
+               "/m1/d1/"
              ]
     end
   end

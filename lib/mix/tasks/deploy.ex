@@ -46,7 +46,8 @@ defmodule Mix.Tasks.Deploy do
       "tag=#{tag}",
       "repository=#{Ops.Utils.Config.lookup_image_repository()}",
       "docker_user=#{Ops.Utils.Config.settings()[:docker][:username]}",
-      "docker_pass=#{Ops.Utils.Config.settings()[:docker][:password]}"
+      "docker_pass=#{Ops.Utils.Config.settings()[:docker][:password]}",
+      "master_name=#{master.name}"
     ]
 
     # deploy host

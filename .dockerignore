@@ -14,7 +14,11 @@ test
 /k8s
 .env
 /tmp
-/content
+/m1
+/m2
+/m3
+/m4
+/m5
 
 devops/workers/provision.retry
 devops/servers/provision/playbook.retry

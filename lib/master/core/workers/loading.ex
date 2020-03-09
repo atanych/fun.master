@@ -14,7 +14,7 @@ defmodule Workers.Loading do
   def download(task) do
     disk = Servers.GetSpace.call() |> Ext.Utils.Enum.randomize_by(:available_space) |> Map.get(:dir)
     week = Timex.format!(Timex.now(), "%W", :strftime)
-    content_path = "content/#{disk}/#{week}"
+    content_path = "#{Ext.Config.get(:self_name)}/#{disk}/#{week}"
     File.mkdir_p!(content_path)
     loading_path = "#{Ext.Config.get([:workers, :transcode_path])}/#{task.server.name}/#{task.movie_uuid}"
     args = [loading_path, content_path]
