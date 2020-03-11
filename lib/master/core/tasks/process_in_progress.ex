@@ -15,14 +15,20 @@ defmodule Tasks.ProcessInProgress do
 
   def handle_task(task) do
     status = Workers.GetTranscodingStatus.call(task)
-    if status == "ready", do: ready_handler(task)
+    if status in ["ready", "bad_file"], do: status_handler(status, task)
   end
 
-  def ready_handler(task) do
+  def status_handler(status, task) do
     Master.Repo.transaction(fn ->
       worker = Master.Worker |> Master.Repo.lock_for_update() |> Master.Repo.get(task.worker_id)
-      %{pid: pid} = Task.async(fn -> Workers.Loading.call(task) end)
-      Master.Repo.save!(task, %{status: :loading, pid: Ext.Utils.Base.encode(pid)})
+
+      if status == "ready" do
+        %{pid: pid} = Task.async(fn -> Workers.Loading.call(task) end)
+        Master.Repo.save!(task, %{status: :loading, pid: Ext.Utils.Base.encode(pid)})
+      else
+        Master.Repo.save!(task, %{status: :bad_file})
+      end
+
       Workers.ChangeStatus.call(worker, :ready)
     end)
   end
