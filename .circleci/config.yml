@@ -8,6 +8,7 @@ jobs:
           MIX_ENV: test
           REDIS_URL: 127.0.0.1
           POSTGRES_USER: root
+          SELF_NAME: m1
 
       - image: shold046/postgres-11-rus
         environment:

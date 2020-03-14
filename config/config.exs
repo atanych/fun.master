@@ -50,6 +50,8 @@ config :master, :ops,
 logger_file = "deps/ext/lib/ext/logger/config.exs"
 if File.exists?(logger_file), do: import_config("../#{logger_file}")
 
+config :porcelain, driver: Porcelain.Driver.Basic
+
 case Mix.env() do
   :test -> import_config "test.exs"
   :dev -> import_config "dev.exs"

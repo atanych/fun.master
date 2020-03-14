@@ -11,6 +11,7 @@ defmodule Master.Application do
       Master.Repo,
       MasterWeb.Endpoint,
       Workers.Task,
+      Workers.UploadTask,
       Workers.Worker
     ]
 

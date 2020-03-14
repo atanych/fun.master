@@ -2,7 +2,7 @@ use Mix.Config
 
 # Configure your database
 config :master, Master.Repo,
-  database: "fun_mater_dev",
+  database: "fun_master_dev",
   hostname: "localhost",
   pool_size: 10,
   ownership_timeout: 300_000,
