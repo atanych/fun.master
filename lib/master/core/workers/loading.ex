@@ -37,7 +37,6 @@ defmodule Workers.Loading do
 
   def handle_download({_, 0}, task, url) do
     Master.Repo.save!(task, %{status: :done, url: "#{url}/#{task.movie_uuid}/master.m3u8"})
-    Servers.ChangeReserved.call(task.server, :decrease)
     space = Servers.GetSpace.call()
 
     Master.Repo.save!(task.server, %{

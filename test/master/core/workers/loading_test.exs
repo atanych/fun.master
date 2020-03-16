@@ -62,7 +62,7 @@ defmodule Workers.LoadingTest do
       server = Master.Repo.reload(task.server)
       task = Master.Repo.reload(task)
       assert %{status: :done, url: ^url} = task
-      assert %{total_space: 233, available_space: 127, reserved_space: 0} = server
+      assert %{total_space: 233, available_space: 127, reserved_space: 10} = server
     end
   end
 end

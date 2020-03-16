@@ -46,5 +46,21 @@ defmodule Tasks.ProcessInProgressTest do
         assert called(Workers.Loading.call(:_))
       end
     end
+
+    test "if exists tasks in status :in_progress and bad_file transcoding" do
+      with_mocks([{Workers.GetTranscodingStatus, [], [call: fn _ -> "bad_file" end]}]) do
+        server = insert(:server, name: "def_1", total_space: 100, available_space: 100, reserved_space: 10)
+        worker = insert(:worker, ip: "192.168.1.1", status: :busy, max_tasks: 1, tasks_in_progress: 1)
+        uuid = Ecto.UUID.generate()
+        insert(:task, server_id: server.id, movie_uuid: uuid, status: :in_progress, worker_id: worker.id)
+        Tasks.ProcessInProgress.call()
+        tasks = Master.Task |> Master.Repo.where(status: :bad_file) |> Master.Repo.all()
+        worker = Master.Repo.reload(worker)
+        server = Master.Repo.reload(server)
+        assert length(tasks) == 1
+        assert worker.status == :ready
+        assert server.reserved_space == 0
+      end
+    end
   end
 end
