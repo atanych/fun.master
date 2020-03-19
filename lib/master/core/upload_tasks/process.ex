@@ -29,10 +29,10 @@ defmodule UploadTasks.Process do
 
   defp upload_file!(task) do
     folder_path_list = task.url |> String.split("/") |> Enum.drop(-1)
-    folder_path = "/" <> Enum.join(folder_path_list, "/")
+    folder_path = Enum.join(folder_path_list, "/")
     mkdir_path = "/" <> (folder_path_list |> Enum.drop(-1) |> Enum.join("/"))
     Ext.System.cmd!("ssh", ["root@#{task.cdn_info["ip"]}", "-i", get_cdn_key(task), "mkdir", "-p", mkdir_path])
-    Ext.System.cmd!("scp", ["-i", get_cdn_key(task), "-r", folder_path, "root@#{task.cdn_info["ip"]}:#{folder_path}"])
+    Ext.System.cmd!("scp", ["-i", get_cdn_key(task), "-r", folder_path, "root@#{task.cdn_info["ip"]}:/#{folder_path}"])
   end
 
   defp store_key(task) do
