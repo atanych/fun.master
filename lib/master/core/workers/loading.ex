@@ -39,10 +39,14 @@ defmodule Workers.Loading do
     Master.Repo.save!(task, %{status: :done, url: "#{url}/#{task.movie_uuid}/master.m3u8"})
     space = Servers.GetSpace.call()
 
-    Master.Repo.save!(task.server, %{
-      total_space: Ext.Utils.Enum.sum_by(space, & &1.total_space),
-      available_space: Ext.Utils.Enum.sum_by(space, & &1.available_space)
-    })
+    Master.Repo.transaction(fn ->
+      server = Master.Server |> Master.Repo.lock_for_update() |> Master.Repo.get(task.server.id)
+
+      Master.Repo.save!(server, %{
+        total_space: Ext.Utils.Enum.sum_by(space, & &1.total_space),
+        available_space: Ext.Utils.Enum.sum_by(space, & &1.available_space)
+      })
+    end)
 
     :ok
   end
