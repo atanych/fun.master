@@ -18,8 +18,13 @@ defmodule Workers.Task do
   def handle_info(:run_activity, state) do
     Logger.info("Start task activity")
     Tasks.ProcessLoading.call()
-    Tasks.ProcessInProgress.call()
-    Tasks.ProcessNew.call()
+    deploy = Master.Deploy |> Master.Repo.get_by(status: :in_progress)
+
+    if !deploy do
+      Tasks.ProcessInProgress.call()
+      Tasks.ProcessNew.call()
+    end
+
     schedule_next_activity(state)
   end
 
