@@ -29,7 +29,7 @@ defmodule Tasks.ProcessInProgress do
         Master.Repo.save!(task, %{status: :bad_file})
       end
 
-      Servers.ChangeReserved.call(task.server, :decrease)
+      Servers.ChangeReserved.call(task.server.id, :decrease)
       Workers.ChangeStatus.call(worker, :ready)
     end)
   end
