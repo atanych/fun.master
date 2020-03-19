@@ -4,3 +4,5 @@ db_pass: rw21m8hl8pihfmvk
 masters:
   - name: m1
     ip: 91.218.215.10
+  - name: m2
+    ip: 91.218.215.14
