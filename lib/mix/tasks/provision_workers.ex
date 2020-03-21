@@ -8,7 +8,7 @@ defmodule Mix.Tasks.ProvisionWorkers do
 
   def do_run(conditions) do
     Enum.each([:postgrex, :ecto], &Application.ensure_all_started/1)
-    Master.Repo.start_link
+    Master.Repo.start_link()
 
     Master.Worker
     |> Master.Repo.where(conditions)
