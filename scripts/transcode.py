@@ -48,7 +48,7 @@ print("Start compress script - " + str(datetime.datetime.now()))
 download_file(ip, url, origin_uuid_path)
 
 # start command transcode
-cmd = f'ffmpeg -i {origin_uuid_path}/{name} -b:v:0 4000k -b:a:0 192k -map 0:v -map 0:a -f hls -var_stream_map "v:0,a:0"  -hls_list_size 0 -master_pl_name master.m3u8 -hls_segment_filename "{transcode_uuid_path}/vs%v/file_%03d.ts" {transcode_uuid_path}/vs%v/out.m3u8'
+cmd = f'ffmpeg -i {origin_uuid_path}/{name} -b:v:0 4000k -b:a:0 192k -map 0:v -map 0:a -f hls -var_stream_map "v:0,a:0"  -hls_list_size 0 -master_pl_name master.m3u8 -hls_segment_filename "{transcode_uuid_path}/vs%v/file_%03d.ts" -force_key_frames "expr:gte(t,n_forced*1)" -hls_time 2 {transcode_uuid_path}/vs%v/out.m3u8'
 result_transcode = os.system(cmd)
 
 if result_transcode == 0:
