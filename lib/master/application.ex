@@ -12,6 +12,7 @@ defmodule Master.Application do
       MasterWeb.Endpoint,
       Workers.Task,
       Workers.UploadTask,
+      Workers.Tar,
       Workers.Worker
     ]
 

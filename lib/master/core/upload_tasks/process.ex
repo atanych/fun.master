@@ -28,11 +28,32 @@ defmodule UploadTasks.Process do
   end
 
   defp upload_file!(task) do
+    movie_dir = "/root/storage/priv/static/movies"
     folder_path_list = task.url |> String.split("/") |> Enum.drop(-1)
-    folder_path = Enum.join(folder_path_list, "/")
+    tar_path = Enum.join(folder_path_list, "/") <> ".tar"
     mkdir_path = "/" <> (folder_path_list |> Enum.drop(-1) |> Enum.join("/"))
-    Ext.System.cmd!("ssh", ["root@#{task.cdn_info["ip"]}", "-i", get_cdn_key(task), "mkdir", "-p", mkdir_path])
-    Ext.System.cmd!("scp", ["-i", get_cdn_key(task), "-r", folder_path, "root@#{task.cdn_info["ip"]}:/#{folder_path}"])
+
+    Ext.System.cmd!("ssh", [
+      "root@#{task.cdn_info["ip"]}",
+      "-i",
+      get_cdn_key(task),
+      "mkdir",
+      "-p",
+      movie_dir <> mkdir_path
+    ])
+
+    Ext.System.cmd!("scp", ["-i", get_cdn_key(task), tar_path, "root@#{task.cdn_info["ip"]}:#{movie_dir}#{mkdir_path}"])
+
+    Ext.System.cmd!("ssh", [
+      "root@#{task.cdn_info["ip"]}",
+      "-i",
+      get_cdn_key(task),
+      "tar",
+      "-xzvf",
+      movie_dir <> "/" <> tar_path,
+      "-C",
+      movie_dir
+    ])
   end
 
   defp store_key(task) do
