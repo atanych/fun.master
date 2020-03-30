@@ -54,6 +54,15 @@ defmodule UploadTasks.Process do
       "-C",
       movie_dir
     ])
+
+    Ext.System.cmd!("ssh", [
+      "root@#{task.cdn_info["ip"]}",
+      "-i",
+      get_cdn_key(task),
+      "rm",
+      "-R",
+      movie_dir <> "/" <> Enum.join(folder_path_list, "/") <> "/"
+    ])
   end
 
   defp store_key(task) do

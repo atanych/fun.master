@@ -14,6 +14,6 @@ defmodule Master.UploadTask do
   end
 
   def changeset(struct, params \\ %{}) do
-    cast(struct, params, [:movie_uuid, :url, :status, :server_id, :cdn_info])
+    cast(struct, params, [:movie_uuid, :url, :status, :server_id, :cdn_info, :updated_at, :inserted_at])
   end
 end

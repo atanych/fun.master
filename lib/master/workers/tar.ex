@@ -23,6 +23,7 @@ defmodule Workers.Tar do
     Master.Task
     |> Tasks.ServerQuery.call()
     |> Master.Repo.where(status: :ready_to_tar)
+    |> Master.Repo.order_by(asc: :inserted_at)
     |> Ecto.Query.limit(30)
     |> Master.Repo.all()
     |> Enum.each(&Tasks.Tar.call/1)

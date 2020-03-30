@@ -23,6 +23,7 @@ defmodule Workers.UploadTask do
     Master.UploadTask
     |> Tasks.ServerQuery.call()
     |> Master.Repo.where(status: :new)
+    |> Master.Repo.order_by(asc: :inserted_at)
     |> Ecto.Query.limit(30)
     |> Master.Repo.all()
     |> Enum.each(&UploadTasks.Process.call/1)
