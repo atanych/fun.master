@@ -62,6 +62,17 @@ defmodule Workers.UploadTaskTest do
         ])
       )
 
+      assert_called(
+        Ext.System.cmd!("ssh", [
+          "root@#{task.cdn_info["ip"]}",
+          "-i",
+          :_,
+          "rm",
+          "-R",
+          "/root/storage/priv/static/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3/"
+        ])
+      )
+
       uploaded_task = Master.Repo.get_by(Master.UploadTask, server_id: server1.id, status: :uploaded)
       assert %{"available_capacity" => 1.0, "total_capacity" => 2.0} = uploaded_task.cdn_info
     end

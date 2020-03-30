@@ -1,7 +1,7 @@
 defmodule Tasks.TarTest do
   use MasterWeb.ConnCase
 
-  test ".call" do
+  test ".call (success)" do
     with_mocks([{Ext.System, [], [cmd!: fn _, _ -> "" end]}]) do
       task =
         insert(:task,
@@ -23,6 +23,21 @@ defmodule Tasks.TarTest do
 
       task = Master.Repo.reload(task)
       assert task.status == :done
+    end
+  end
+
+  test ".call (error)" do
+    with_mocks([{Ext.System, [], [cmd!: fn _, _ -> raise "error" end]}]) do
+      task =
+        insert(:task,
+          movie_uuid: "9bbb2be5-9309-46de-bc8e-31e15ad18032",
+          url: "m1/disk2/08/9bbb2be5-9309-46de-bc8e-31e15ad18032/master.m3u8"
+        )
+
+      Tasks.Tar.call(task)
+
+      task = Master.Repo.reload(task)
+      assert task.status == :new
     end
   end
 end

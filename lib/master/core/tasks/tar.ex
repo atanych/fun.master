@@ -13,5 +13,7 @@ defmodule Tasks.Tar do
     Ext.System.cmd!("rm", ["-R", folder_path])
 
     Master.Repo.save!(task, status: :done)
+  rescue
+    _e in RuntimeError -> Master.Repo.save!(task, status: :new)
   end
 end

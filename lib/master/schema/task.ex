@@ -27,6 +27,17 @@ defmodule Master.Task do
   end
 
   def changeset(struct, params \\ %{}) do
-    cast(struct, params, [:movie_uuid, :origin_url, :status, :server_id, :worker_id, :pid, :url, :origin_server_ip])
+    cast(struct, params, [
+      :movie_uuid,
+      :origin_url,
+      :status,
+      :server_id,
+      :worker_id,
+      :pid,
+      :url,
+      :origin_server_ip,
+      :updated_at,
+      :inserted_at
+    ])
   end
 end
