@@ -17,7 +17,6 @@ defmodule Workers.Task do
 
   def handle_info(:run_activity, state) do
     Logger.info("Start task activity")
-    Tasks.ProcessLoading.call()
     deploy = Master.Repo.get_by(Master.Deploy, status: :in_progress)
 
     if !deploy do

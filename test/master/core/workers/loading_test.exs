@@ -61,7 +61,7 @@ defmodule Workers.LoadingTest do
       url = "m1/d1/#{Timex.format!(Timex.now(), "%W", :strftime)}/#{task.movie_uuid}/master.m3u8"
       server = Master.Repo.reload(task.server)
       task = Master.Repo.reload(task)
-      assert %{status: :done, url: ^url} = task
+      assert %{status: :ready_to_tar, url: ^url} = task
       assert %{total_space: 233, available_space: 127, reserved_space: 10} = server
     end
   end
