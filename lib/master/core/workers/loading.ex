@@ -36,7 +36,7 @@ defmodule Workers.Loading do
   end
 
   def handle_download({_, 0}, task, url) do
-    Master.Repo.save!(task, %{status: :done, url: "#{url}/#{task.movie_uuid}/master.m3u8"})
+    Master.Repo.save!(task, %{status: :ready_to_tar, url: "#{url}/#{task.movie_uuid}/master.m3u8"})
     space = Servers.GetSpace.call()
 
     Master.Repo.transaction(fn ->
