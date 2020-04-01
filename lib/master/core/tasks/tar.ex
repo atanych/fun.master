@@ -16,6 +16,8 @@ defmodule Tasks.Tar do
   rescue
     e in RuntimeError ->
       Logger.warn("Task to tar has error - #{inspect(e)}")
+      folder_path_list = task.url |> String.split("/") |> Enum.drop(-1)
+      Ext.System.cmd("rm", ["-R", Enum.join(folder_path_list, "/") <> ".tar"])
       Master.Repo.save!(task, status: :new, url: nil)
   end
 end
