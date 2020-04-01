@@ -10,7 +10,7 @@ defmodule Tasks.Tar do
 
     Ext.System.cmd!("tar", ["czf", "#{folder_path}.tar", folder_path])
 
-    Ext.System.cmd!("rm", ["-R", folder_path])
+#    Ext.System.cmd!("rm", ["-R", folder_path])
 
     Master.Repo.save!(task, status: :done)
   rescue
