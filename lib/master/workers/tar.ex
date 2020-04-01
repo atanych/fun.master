@@ -5,7 +5,7 @@ defmodule Workers.Tar do
   require Logger
   require Ecto.Query
 
-  @next_activity_time 60
+  @next_activity_time 10
 
   @impl true
   def init(state) do

@@ -14,6 +14,18 @@ defmodule Tasks.Tar do
 
     Master.Repo.save!(task, status: :done)
   rescue
-    _e in RuntimeError -> Master.Repo.save!(task, status: :new)
+    e in RuntimeError ->
+      Logger.warn("Task to tar has error - #{inspect(e)}")
+
+      # Hack, tar exists but we have error
+      folder_path_list = task.url |> String.split("/") |> Enum.drop(-1)
+
+      if File.exists?(Enum.join(folder_path_list, "/") <> ".tar") do
+        Logger.warn("Task exists - #{inspect(task)}")
+        Master.Repo.save!(task, status: :done)
+      else
+        Logger.warn("Task not exists - #{inspect(task)}")
+        Master.Repo.save!(task, status: :new)
+      end
   end
 end
