@@ -1,4 +1,4 @@
-FROM forfunfun/base-elixir:0.1.0
+FROM xoomxoom/base-elixir:0.1.0
 
 RUN rm -f /etc/service/nginx/down
 RUN rm -f /etc/nginx/sites-enabled/default

@@ -35,11 +35,8 @@ config :master, :ops,
   docker: [
     username: System.get_env("DOCKER_USER"),
     password: System.get_env("DOCKER_PASS"),
-    image_repository: "forfunfun/fun.master",
+    image_repository: "xoomxoom/fun.master",
     file: "config/Dockerfile"
-  ],
-  build_info: [
-    file_name: "tmp/build_info.json"
   ],
   check_restart_timeout: 30,
   available_environments: ["staging", "uat", "prod", "stable"],
