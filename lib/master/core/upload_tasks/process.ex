@@ -17,14 +17,17 @@ defmodule UploadTasks.Process do
 
     {total, available} = get_cdn_server_capacity!(task)
     # coveralls-ignore-start
-    Logger.info("Upload task #{task.id} is uploaded. CDN #{task.cdn_info["id"]}, space=#{available}Gb/#{total}Gb")
+    Logger.info(
+      "Upload task #{task.id} #{task.movie_uuid} is uploaded. CDN #{task.cdn_info["id"]}, space=#{available}Gb/#{total}Gb"
+    )
+
     # coveralls-ignore-stop
     cdn_info = task.cdn_info ||| %{"available_capacity" => available, "total_capacity" => total}
     Master.Repo.save!(task, %{cdn_info: cdn_info})
   rescue
     e in RuntimeError ->
       Master.Repo.save!(task, %{status: :failed})
-      Logger.error("Upload task #{task.id} is failed. #{inspect(e)}")
+      Logger.error("Upload task #{task.id} #{task.movie_uuid} is failed. #{inspect(e)}")
   end
 
   defp upload_file!(task) do
@@ -61,7 +64,7 @@ defmodule UploadTasks.Process do
       get_cdn_key(task),
       "rm",
       "-R",
-      movie_dir <> "/" <> Enum.join(folder_path_list, "/") <> "/"
+      movie_dir <> "/" <> tar_path
     ])
   end
 

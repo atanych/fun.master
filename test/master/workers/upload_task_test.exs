@@ -69,7 +69,7 @@ defmodule Workers.UploadTaskTest do
           :_,
           "rm",
           "-R",
-          "/root/storage/priv/static/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3/"
+          "/root/storage/priv/static/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3.tar"
         ])
       )
 
