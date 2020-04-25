@@ -31,7 +31,7 @@ defmodule UploadTasks.Process do
   end
 
   defp upload_file!(task) do
-    movie_dir = "/root/storage/priv/static/movies"
+    movie_dir = "/var/storage/movies"
     folder_path_list = task.url |> String.split("/") |> Enum.drop(-1)
     tar_path = Enum.join(folder_path_list, "/") <> ".tar"
     mkdir_path = "/" <> (folder_path_list |> Enum.drop(-1) |> Enum.join("/"))

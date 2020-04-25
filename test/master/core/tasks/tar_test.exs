@@ -27,7 +27,7 @@ defmodule Tasks.TarTest do
   end
 
   test ".call (error)" do
-    with_mocks([{Ext.System, [], [cmd!: fn _, _ -> raise "error" end]}]) do
+    with_mocks([{Ext.System, [], [cmd!: fn _, _ -> raise "error" end, cmd: fn _, _ -> "" end]}]) do
       task =
         insert(:task,
           movie_uuid: "9bbb2be5-9309-46de-bc8e-31e15ad18032",

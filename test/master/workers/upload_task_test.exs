@@ -36,7 +36,7 @@ defmodule Workers.UploadTaskTest do
           :_,
           "mkdir",
           "-p",
-          "/root/storage/priv/static/movies/m1/disk2/08"
+          "/var/storage/movies/m1/disk2/08"
         ])
       )
 
@@ -45,7 +45,7 @@ defmodule Workers.UploadTaskTest do
           "-i",
           :_,
           "m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3.tar",
-          "root@#{task.cdn_info["ip"]}:/root/storage/priv/static/movies/m1/disk2/08"
+          "root@#{task.cdn_info["ip"]}:/var/storage/movies/m1/disk2/08"
         ])
       )
 
@@ -56,9 +56,9 @@ defmodule Workers.UploadTaskTest do
           :_,
           "tar",
           "-xzvf",
-          "/root/storage/priv/static/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3.tar",
+          "/var/storage/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3.tar",
           "-C",
-          "/root/storage/priv/static/movies"
+          "/var/storage/movies"
         ])
       )
 
@@ -69,7 +69,7 @@ defmodule Workers.UploadTaskTest do
           :_,
           "rm",
           "-R",
-          "/root/storage/priv/static/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3.tar"
+          "/var/storage/movies/m1/disk2/08/621d4cee-38aa-4ee7-89e1-50a5ef821aa3/"
         ])
       )
 
